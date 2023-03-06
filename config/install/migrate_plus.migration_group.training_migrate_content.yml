@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: training_migrate_content
+module: training_migrate_content
+label: 'Training migrate content module'
+description: ''
+source_type: null
+shared_configuration: null

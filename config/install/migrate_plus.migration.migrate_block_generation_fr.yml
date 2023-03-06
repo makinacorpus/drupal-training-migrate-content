@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_block_generation_fr
+label: "Block content: Generation - Fr."
+migration_group: training_migrate_content
+migration_tags:
+  - Block
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/fr/block_generation.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: uuid
+      label: 'Drupal uuid'
+    -
+      name: info
+      label: 'Block label'
+    -
+      name: field_generation
+      label: Generation
+process:
+  uuid: uuid
+  info: info
+  field_generation:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_generation_fr
+      source: field_generation
+  langcode:
+    -
+      default_value: fr
+      plugin: default_value
+destination:
+  plugin: entity:block_content
+  default_bundle: generation
+migration_dependencies:
+  required:
+    - migrate_content_taxonomy_generation_fr
+  optional: { }

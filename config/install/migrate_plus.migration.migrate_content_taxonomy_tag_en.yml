@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_taxonomy_tag_en
+label: "Taxonomy: Tag - En."
+migration_group: training_migrate_content
+migration_tags:
+  - Taxonomy
+source:
+  plugin: csv
+  path: 'profiles/training_profile/modules/training_migrate_content/default_content/entities/en/term_tag.csv'
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: label
+      label: Label
+process:
+  tid:
+    -
+      plugin: migration_lookup
+      source: id
+      migration: migrate_content_taxonomy_tag_fr
+  name: label
+  langcode:
+    -
+      default_value: en
+      plugin: default_value
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: tag
+  translations: true
+migration_dependencies:
+  required:
+    - migrate_content_taxonomy_tag_fr
+  optional: { }

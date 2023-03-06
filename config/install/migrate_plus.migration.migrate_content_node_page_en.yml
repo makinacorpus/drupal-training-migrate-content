@@ -1,0 +1,69 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_node_page_en
+label: "Node: Page - En."
+migration_group: training_migrate_content
+migration_tags:
+  - Content
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/en/node_page.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: title
+      label: Title
+    -
+      name: body
+      label: Body
+    -
+      name: field_featured_media
+      label: 'Featured media'
+    -
+      name: author
+      label: Author
+process:
+  nid:
+    -
+      plugin: migration_lookup
+      source: id
+      migration: migrate_content_node_page_fr
+  title: title
+  body/value: body
+  body/format:
+    -
+      plugin: default_value
+      default_value: full_html
+  uid:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_user
+      source: author
+  langcode:
+    -
+      default_value: en
+      plugin: default_value
+  moderation_state:
+    -
+      default_value: published
+      plugin: default_value
+destination:
+  plugin: 'entity:node'
+  default_bundle: page
+  translations: true
+migration_dependencies:
+  required:
+    - migrate_content_user
+    - migrate_content_node_page_fr
+  optional: { }

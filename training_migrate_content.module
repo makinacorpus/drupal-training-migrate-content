@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+function training_migrate_content_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.training_migrate_content':
+      return '<pre>' . \file_get_contents(\dirname(__FILE__) . '/README.md') . '</pre>';
+  }
+}
+
+function training_migrate_content_process_field_type_link(array $value): array {
+  return [
+    'uri' => $value[1],
+    'title' => $value[0],
+  ];
+}
+
+function training_migrate_content_process_uri(array $value): string {
+  return !\is_null($value[0])
+    ? \sprintf('entity:node/%s', $value[0][0])
+    : $value[1];
+}

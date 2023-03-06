@@ -1,0 +1,18 @@
+id,menu_name,title,node,link,weight
+1,main,Pokedex,,internal:/pokemons,1
+2,main,Articles,,internal:/articles,2
+3,main,Newsletter,,internal:/contact/newsletter,3
+4,footer,Pokemon Officiel,,https://www.pokemon.com,1
+5,footer,Pokemon France,,https://www.pokemon-france.com/,2
+6,footer,Pokemon Go live,,https://pokemongolive.com,3
+7,footer,Poke API,,https://pokeapi.co/,4
+8,generations,Génération 1,,internal:/pokemon-generation/generation-1,1
+9,generations,Génération 2,,internal:/pokemon-generation/generation-2,2
+10,generations,Génération 3,,internal:/pokemon-generation/generation-3,3
+11,generations,Génération 4,,internal:/pokemon-generation/generation-4,4
+12,generations,Génération 5,,internal:/pokemon-generation/generation-5,5
+13,generations,Génération 6,,internal:/pokemon-generation/generation-6,6
+14,mentions,Qui sommes nous,1,,1
+15,mentions,Mentions légales,2,,2
+16,mentions,Politique de confidentialité,3,,3
+17,mentions,Plan du site,,internal:/sitemap,4

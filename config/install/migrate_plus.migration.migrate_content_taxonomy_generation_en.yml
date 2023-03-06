@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_taxonomy_generation_en
+label: "Taxonomy: Generation - En."
+migration_group: training_migrate_content
+migration_tags:
+  - Taxonomy
+source:
+  plugin: csv
+  path: 'profiles/training_profile/modules/training_migrate_content/default_content/entities/en/term_generation.csv'
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: label
+      label: Label
+    -
+      name: field_blue
+      label: 'Blue name'
+    -
+      name: field_red
+      label: 'Red name'
+process:
+  tid:
+    -
+      plugin: migration_lookup
+      source: id
+      migration: migrate_content_taxonomy_generation_fr
+  name: label
+  field_blue: field_blue
+  field_red: field_red
+  langcode:
+    -
+      default_value: en
+      plugin: default_value
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: generation
+  translations: true
+migration_dependencies:
+  required:
+    - migrate_content_taxonomy_generation_fr
+  optional: { }

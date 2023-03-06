@@ -1,0 +1,68 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_node_pokemon_en
+label: "Node: Pokemon - En."
+migration_group: training_migrate_content
+migration_tags:
+  - Content
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/en/node_pokemon.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: title
+      label: Title
+    -
+      name: field_blue
+      label: 'Blue desc.'
+    -
+      name: field_red
+      label: 'Red desc.'
+    -
+      name: author
+      label: Author
+process:
+  nid:
+    -
+      plugin: migration_lookup
+      source: id
+      migration: migrate_content_node_pokemon_fr
+  title: title
+  field_blue: field_blue
+  field_red: field_red
+  uid:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_user
+      source: author
+  langcode:
+    -
+      default_value: en
+      plugin: default_value
+  moderation_state:
+    -
+      default_value: published
+      plugin: default_value
+destination:
+  plugin: 'entity:node'
+  default_bundle: pokemon
+  translations: true
+migration_dependencies:
+  required:
+    - migrate_content_user
+    - migrate_content_node_pokemon_fr
+    - migrate_content_taxonomy_type_en
+    - migrate_content_taxonomy_generation_en
+  optional: { }

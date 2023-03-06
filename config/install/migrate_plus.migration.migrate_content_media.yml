@@ -1,0 +1,55 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_media
+label: 'File: Media - Und.'
+migration_group: training_migrate_content
+migration_tags:
+  - File
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/und/media.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: target_id
+      label: 'Migration csv file id'
+    -
+      name: title
+      label: Title
+    -
+      name: alt
+      label: 'Media alternative text'
+process:
+  name: title
+  field_media_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_file
+      source: target_id
+  field_media_image/title: title
+  field_media_image/alt: alt
+  thumbnail/target_id:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_file
+      source: target_id
+  thumbnail/title: title
+  thumbnail/alt: alt
+destination:
+  plugin: 'entity:media'
+  default_bundle: image
+migration_dependencies:
+  required:
+    - migrate_content_file
+  optional: { }

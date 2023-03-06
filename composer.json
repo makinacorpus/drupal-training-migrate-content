@@ -1,0 +1,10 @@
+{
+    "name": "makina-corpus/training_migrate_content",
+    "description": "Module that create content for the training session.",
+    "type": "drupal-module",
+    "require": {
+        "drupal/migrate_plus": "^6",
+        "drupal/migrate_tools": "^6",
+        "drupal/migrate_source_csv": "^3"
+    }
+}

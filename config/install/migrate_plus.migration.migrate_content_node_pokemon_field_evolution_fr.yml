@@ -1,0 +1,48 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_node_pokemon_field_evolution_fr
+label: "Node: Pokemon field_ evolutions - Fr."
+migration_group: training_migrate_content
+migration_tags:
+  - Content
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/fr/node_pokemon_field_evolutions.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: field_evolutions
+      label: 'Pokemon evolutions'
+process:
+  nid:
+    -
+      plugin: migration_lookup
+      source: id
+      migration: migrate_content_node_pokemon_fr
+  field_evolutions:
+    -
+      plugin: explode
+      delimiter: ;
+      source: field_evolutions
+    -
+      plugin: migration_lookup
+      migration: migrate_content_node_pokemon_fr
+destination:
+  plugin: 'entity:node'
+  default_bundle: pokemon
+migration_dependencies:
+  required:
+    - migrate_content_node_pokemon_fr
+    - migrate_content_node_pokemon_en
+  optional: { }

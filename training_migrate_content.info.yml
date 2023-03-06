@@ -1,0 +1,11 @@
+name: Training migrate content
+package: Migration
+type: module
+description: 'Import content for training sessions.'
+core_version_requirement: ^9 || ^10
+
+dependencies:
+  - training_profile
+  - migrate_plus
+  - migrate_tools
+  - migrate_source_csv

@@ -1,0 +1,103 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_node_pokemon_fr
+label: "Node: Pokemon - Fr."
+migration_group: training_migrate_content
+migration_tags:
+  - Content
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/fr/node_pokemon.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: title
+      label: Title
+    -
+      name: field_id
+      label: 'Pokedex id'
+    -
+      name: field_blue
+      label: 'Blue desc.'
+    -
+      name: field_red
+      label: 'Red desc.'
+    -
+      name: field_generation
+      label: Generation
+    -
+      name: field_featured_media
+      label: 'Featured media'
+    -
+      name: field_types
+      label: 'Pokemon types'
+    -
+      name: field_weaknesses
+      label: 'Pokemon weaknesses'
+    -
+      name: author
+      label: Author
+process:
+  title: title
+  field_id: field_id
+  field_blue: field_blue
+  field_red: field_red
+  field_featured_media:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_media
+      source: field_featured_media
+  field_generation:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_generation_fr
+      source: field_generation
+  field_types:
+    -
+      plugin: explode
+      delimiter: ;
+      source: field_types
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_type_fr
+  field_weaknesses:
+    -
+      plugin: explode
+      delimiter: ;
+      source: field_weaknesses
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_type_fr
+  uid:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_user
+      source: author
+  langcode:
+    -
+      default_value: fr
+      plugin: default_value
+  moderation_state:
+    -
+      default_value: published
+      plugin: default_value
+destination:
+  plugin: 'entity:node'
+  default_bundle: pokemon
+migration_dependencies:
+  required:
+    - migrate_content_user
+    - migrate_content_taxonomy_type_fr
+    - migrate_content_taxonomy_generation_fr
+  optional: { }

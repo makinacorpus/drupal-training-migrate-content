@@ -1,0 +1,7 @@
+services:
+  training_migrate_content.subscriber.migrate_content_events:
+    class: Drupal\training_migrate_content\EventSubscriber\TrainingMigrateContentEvents
+    arguments:
+      - '@entity_type.manager'
+    tags:
+      - { name: event_subscriber }

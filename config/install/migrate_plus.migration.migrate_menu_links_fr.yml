@@ -1,0 +1,69 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_menu_links_fr
+migration_group: training_migrate_content
+migration_tags:
+  - Menu
+label: 'Menu link content : Fr.'
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/fr/menu_link_content.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: menu_name
+      label: 'Menu name'
+    -
+      name: title
+      label: Title
+    -
+      name: node
+      label: 'Created node link'
+    -
+      name: link
+      label: 'Custom link'
+    -
+      name: weight
+      label: Weight
+    -
+      name: parent
+      label: 'Menu parent'
+process:
+  title: title
+  menu_name: menu_name
+  node:
+    -
+      plugin: migration_lookup
+      source: node
+      migration: migrate_content_node_page_fr
+  link/uri:
+    -
+      plugin: callback
+      callable: training_migrate_content_process_uri
+      source :
+        - '@node'
+        - link
+  weight: weight
+  langcode:
+    -
+      default_value: fr
+      plugin: default_value
+destination:
+  plugin: 'entity:menu_link_content'
+migration_dependencies:
+  required:
+    - migrate_content_node_page_fr
+    - migrate_content_node_article_fr
+    - migrate_content_node_pokemon_fr
+  optional: { }

@@ -1,0 +1,81 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_user
+label: 'User - Und.'
+migration_group: training_migrate_content
+migration_tags:
+  - User
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/und/user.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: username
+      label: Username
+    -
+      name: mail
+      label: mail
+    -
+      name: user_picture
+      label: 'User picture'
+    -
+      name: role
+      label: Role
+    -
+      name: field_firstname
+      label: Firstname
+    -
+      name: field_lastname
+      label: Lastname
+    -
+      name: field_interests
+      label: 'Center of interest'
+    -
+      name: field_newsletter
+      label: 'Newsletter registration'
+    -
+      name: field_birthdate
+      label: Birthdate
+process:
+  name: username
+  mail: mail
+  role: role
+  user_picture:
+    -
+      plugin: migration_lookup
+      source: user_picture
+      migration: migrate_content_file
+  field_newsletter: field_newsletter
+  field_firstname: field_firstname
+  field_lastname: field_lastname
+  field_interests:
+    -
+      plugin: explode
+      delimiter: ;
+      source: field_interests
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_tag_fr
+  field_birthdate/value: field_birthdate
+  status:
+    -
+      default_value: 1
+      plugin: default_value
+destination:
+  plugin: 'entity:user'
+migration_dependencies:
+  required:
+    - migrate_content_taxonomy_tag_fr
+  optional: { }

@@ -1,0 +1,79 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - training_migrate_content
+id: migrate_content_node_article_fr
+label: "Node: Article - Fr."
+migration_group: training_migrate_content
+migration_tags:
+  - Content
+source:
+  plugin: csv
+  path: profiles/training_profile/modules/training_migrate_content/default_content/entities/fr/node_article.csv
+  delimiter: ','
+  enclosure: '"'
+  header_offset: 0
+  ids:
+    - id
+  fields:
+    -
+      name: id
+      label: 'Migration csv id'
+    -
+      name: title
+      label: Title
+    -
+      name: body
+      label: Body
+    -
+      name: field_featured_media
+      label: 'Featured media'
+    -
+      name: field_tags
+      label: 'Taxonomy vocabulary Tag'
+    -
+      name: author
+      label: Author
+process:
+  title: title
+  body/value: body
+  body/format:
+    -
+      plugin: default_value
+      default_value: full_html
+  field_featured_media:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_media
+      source: field_featured_media
+  field_tags:
+    -
+      plugin: explode
+      delimiter: ;
+      source: field_tags
+    -
+      plugin: migration_lookup
+      migration: migrate_content_taxonomy_tag_fr
+  uid:
+    -
+      plugin: migration_lookup
+      migration: migrate_content_user
+      source: author
+  langcode:
+    -
+      default_value: fr
+      plugin: default_value
+  moderation_state:
+    -
+      default_value: published
+      plugin: default_value
+destination:
+  plugin: 'entity:node'
+  default_bundle: article
+migration_dependencies:
+  required:
+    - migrate_content_user
+    - migrate_content_taxonomy_tag_fr
+  optional: { }
