@@ -21,6 +21,7 @@ This module allows you to create test content for the training installation prof
 ```
 Composer require drupal/migrate_plus
 Composer require drupal/migrate_tools
+Composer require drupal/migrate_source_csv
 vendor/bin/drush en -y training_migrate_content
 bash web/profiles/training_profile/modules/training_migrate_content/script/migrate.sh
 ```
